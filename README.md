@@ -9,7 +9,8 @@ Check if these 3 packages are installed by entering `pip3 list`:
 - pandas
 
 If not then install them by the command:
-```pip3 install -r requestments.txt
+```
+pip3 install -r requirements.txt
 ```
 
 Then run server with: `python3 manage.py runserver`
