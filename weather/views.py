@@ -1,34 +1,36 @@
 from django.shortcuts import render
+import config
 import requests
 import pandas as pd
 def index(request):
-	df = pd.read_csv('./WeatherSite/worldcities.csv')
-	if 'city' in request.GET:
-		city = request.GET['city']
-		if df[df['city_ascii'] == city]['city_ascii'].any():
-			lat = df[df['city_ascii'] == city]['lat']
-			lon = df[df['city_ascii'] == city]['lng']
-			url = "https://climacell-microweather-v1.p.rapidapi.com/weather/realtime"
-			querystring = {
-				"unit_system": "si",
-				"fields": ["precipitation", "precipitation_type", "temp", "cloud_cover", "wind_speed", "weather_code"],
-				"lat": lat,
-				"lon":lon,
-			}
-			headers = {
-				'x-rapidapi-host': "climacell-microweather-v1.p.rapidapi.com",
-				'x-rapidapi-key': "a1ca7cac7bmsh7481cbdd1b05541p170fb7jsnfb74af885ed7",
-			}
-			response = requests.request("GET", url, headers=headers, params=querystring).json()
-			context = {
-				'city_name': city,
-				'temp': response['temp']['value'],
-				'weather_code': response['weather_code']['value'],
-				'wind_speed': response['wind_speed']['value'],
-				'precipitation_type': response['precipitation_type']['value'] 
-			}
-		else:
-			context=None
+	if ('lat' in request.GET and 'lon' in request.GET):
+		base_url = "http://api.openweathermap.org/data/2.5/weather?"
+		api_key = "2027dab46bade426aaa9c65317f55026"
+		lat = request.GET['lat']
+		lon = request.GET['lon']
+		complete_url=base_url+"lat="
+		complete_url= complete_url+lat[1:]+"&lon="
+		complete_url= complete_url+lon
+		complete_url= complete_url[:-1]+"&appid="+config.api_key
+		response = requests.get(complete_url)
+		x = response.json()
+		isNotABeach=False
+		isUnsafe=False
+		isPartlySafe=False
+		weather=x['weather'][0]['id']
+		if (x['main']['grnd_level']<1005):
+			isNotABeach=True
+		if(weather>800):
+			isPartlySafe=True
+		if(weather>=200 and weather<=500):
+			isUnsafe=True
+		context = {
+			'weather_id':weather,
+			'is_not_a_beach':isNotABeach,
+			'is_unsafe':isUnsafe,
+			'is_partly_safe':isPartlySafe,
+			'google_api':config.API_KEY
+		}
 	else:
 		context=None
 	return render(request, 'index.html', context)
