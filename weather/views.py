@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import config
 import requests
-import pandas as pd
 def index(request):
 	if ('lat' in request.GET and 'lon' in request.GET):
 		base_url = "http://api.openweathermap.org/data/2.5/weather?"
@@ -14,19 +13,22 @@ def index(request):
 		complete_url= complete_url[:-1]+"&appid="+config.api_key
 		response = requests.get(complete_url)
 		x = response.json()
-		isNotABeach=False
+		#isNotABeach=False
 		isUnsafe=False
 		isPartlySafe=False
 		weather=x['weather'][0]['id']
-		if (x['main']['grnd_level']<1005):
-			isNotABeach=True
-		if(weather>800):
+		'''if (x['main']['grnd_level']<1005):
+			isNotABeach=True'''
+		if(weather==803):
 			isPartlySafe=True
+		if(weather==804):
+			isUnsafe=True
+		print(weather)
 		if(weather>=200 and weather<=500):
 			isUnsafe=True
 		context = {
 			'weather_id':weather,
-			'is_not_a_beach':isNotABeach,
+			#'is_not_a_beach':isNotABeach,
 			'is_unsafe':isUnsafe,
 			'is_partly_safe':isPartlySafe,
 			'google_api':config.API_KEY

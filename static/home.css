@@ -16,17 +16,19 @@ h1.title,
   font-weight: 900;
 }
 
-/* start welcome animation */
 input[type=text] {
   background-color: #3CBC8D;
   color: white;
 }
+
+/* start welcome animation */
+
 body.welcome {
   background: #512da8;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
-
+/*
 .welcome .splash {
   height: 0px;
   padding: 0px;
@@ -56,8 +58,9 @@ body.welcome {
   border-radius: 50%;
   animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards, hide 2s 2.9s ease forwards;
 }
-   
+   */
 /* moveIn */
+/*
 .welcome header,
 .welcome a.btn {
   opacity: 0;
@@ -158,4 +161,4 @@ body.welcome {
   100% {
     opacity: 0;
   }
-}
+}*/
