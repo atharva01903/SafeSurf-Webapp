@@ -32,5 +32,7 @@ def index(request):
 			'google_api':config.API_KEY
 		}
 	else:
-		context=None
+		context = {
+			'google_api':config.API_KEY
+		}
 	return render(request, 'index.html', context)

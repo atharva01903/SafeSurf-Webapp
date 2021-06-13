@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{% load static %}
 <meta charset="UTF-8">
-<title>WeatherApp</title>
+<meta name="apple-mobile-web-app-title" content="Safe-Surfer!">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'safe-surfer-favicon.ico'%}">
+<link rel="mask-icon" type="" href="{% static 'Logo.svg'%}" color="#111">
+
+<title>Safe Surfer!</title>
+<link rel="stylesheet" href="{% static 'home.css'%}">
+<script type='text/javascript' src="{% static 'config.js'%}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Architects+Daughter|Roboto&amp;subset=latin,devanagari">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
 <style>
 /* Always set the map height explicitly to define the size of the div
@@ -23,25 +34,54 @@ body {
   padding: 0;
 }
 </style>
+<script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+<script> 
+var c_key = config.SECRET_API_KEY;
+</script>
 </head>
-<body align="center">
+<body class="welcome">
+ <span id="welcome" class="z-depth-0"></span>
+  <header class="navbar-fixed"> 
+    <nav class="white">
+      <div class="col s12">
+
+        <div style="align: center;">
+          <center>
+            <img width='300' height='63' style="vertical-align:top;" src="{% static 'Logo.png'%}">
+          </center>
+        </div>
+      </div>
+    </nav>
+ </header>
 <div>
-<h1>Safe Surfers</h1>
-<h2>For best experience, select coordinates closest to the shore</h2>
-<form action="" method="get">
-<input type="text" id="lat" name="lat" placeholder="Enter Latitude">
-<input type="text" id="lon" name="lon" placeholder="Enter Longitude">
-<input type="submit" name="send" value="Search">
-</form>
 <p>
 {% if weather_id %}
 {% if is_unsafe %}
-<h3>The nearest beach to the coordinates is dangerous to surf.<br>Head back to the land. </h3>
+<h3 style="text-align:center;color:white;">The nearest beach to the coordinates is dangerous to surf.<br>Head back to the land. </h3>
 {% elif is_partly_safe %}
-<h3>The nearest beach to the coordinates stands safe but stay cautious.<br> It's cloudy out there. </h3>
+<h3 style="text-align:center;color:white;">The nearest beach to the coordinates stands safe but stay cautious.<br> It's cloudy out there. </h3>
 {% else %}
-<h3>The nearest beach to the coordinates is completely safe to surf.<br> Enjoy your day! </h3>
+<h3 style="text-align:center;color:white;">The nearest beach to the coordinates is completely safe to surf.<br> Enjoy your day! </h3>
 {% endif %}
+{% else %}
+<h3 style="color:cyan;text-align:center;">For best experience, select coordinates closest to the shore</h3>
+<form action="" method="get" style="width:50%;margin-left:25%;">
+<input type="text" id="lat" name="lat" placeholder="Enter Latitude" style="text-color:grey;" required>
+<input type="text" id="lon" name="lon" placeholder="Enter Longitude" style="text-color:grey;" required>
+<div style="text-align:center;">
+<input type="submit" name="send" value="Search" style="align:center;">
+</div>
+</form>
 {% endif %}
 </p>
 </div>
@@ -49,6 +89,13 @@ body {
 <script async
     src="https://maps.googleapis.com/maps/api/js?key={{google_api}}&callback=initMap">
 </script>
+<footer class="page-footer deep-purple darken-3">
+    <div class="footer-copyright deep-purple darken-4">
+      <div class="container">
+        <time>&copy; Vishnu Sai Varshith & Atharva Deshpande!</time>
+      </div>
+    </div>
+ </footer>
 </body>
 <script>
 function initMap() {
@@ -78,4 +125,5 @@ function initMap() {
   });
 }
 </script>
+
 </html>
