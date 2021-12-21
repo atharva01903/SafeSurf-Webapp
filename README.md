@@ -16,3 +16,5 @@ pip3 install -r requirements.txt
 Then run server with: `python3 manage.py runserver`
 
 Enter the city and get the weather details.
+
+YouTube video link: https://www.youtube.com/watch?v=EHRALgCz23E
